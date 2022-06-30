@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ratchet/2.0.2/css/ratchet.css" rel="stylesheet"/>
+<!--<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">-->
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"/>
+<style>
+
+html,body {
+  height: 100%;
+  overflow:auto;
+}
+
+
+  .uploadpreview{
+  position:auto;
+  width:250px;
+  height:250px;
+  display:block;
+  border:1px solid #ccc;
+  margin:0 auto 15px;
+  background-size:100% auto;
+  background-repeat:no-repeat;
+  background-position:center;
+}
+
+input[type="file"] {
+    color: transparent;
+    width: 120px;
+    margin: 0 auto;
+    display: block;
+}
+  
+.button {
+  position: relative;  
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  background-color: gray;
+  color: white;
+  font-size: 16px;
+  padding: 12px 24px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.button:hover {
+  background-color: black;
+}
+
+div label {
+    display: inline-block;
+    width: 150px;	
+}
+
+</style>
+
+</head>
+<body>
+<form action = "{{ url_for('upload_file') }}" method = "POST" 
+ enctype = "multipart/form-data">
+
+
+<div class="container-fluid h-100">
+	<div class="row">
+		<div class="upload-wrap col-sm-12">
+		  <div class="uploadpreview 01"></div>
+		  <label for="01" class="button">select face</label>
+		  <input name='face' id="01" type="file" accept="image/*" style="display: none">
+		</div>
+	</div>
+	<div class="row">
+		<div class="upload-wrap col-sm-12">
+		  <div class="uploadpreview 02"></div>
+		  <label for="02" class="button">select body</label>
+		  <input name='body' id="02" type="file" accept="image/*" style="display: none">
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12"> 
+			<label for="03" class="btn btn-success btn-block">swap</label>
+			<input id="03" type = "submit"/ style="display: none">
+		</div>
+	</div>
+</div>
+</form>
+
+
+
+
+<script>
+    $(".upload-wrap input[type=file]").change(function () {
+  var id = $(this).attr("id");
+  var newimage = new FileReader();
+  newimage.readAsDataURL(this.files[0]);
+  newimage.onload = function (e) {
+    $(".uploadpreview." + id).css(
+    "background-image",
+    "url(" + e.target.result + ")");
+
+  };
+});
+
+var perfEntries = performance.getEntriesByType("navigation");
+
+if (perfEntries[0].type === "back_forward") {
+    location.reload(true);
+}
+  </script>
+</body>
+</html>
